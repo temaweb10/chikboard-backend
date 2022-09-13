@@ -5,6 +5,7 @@ const User = new Schema({
   password: { type: String, required: true },
   subscribers: { type: Number, required: true, default: 0 },
   location: { type: String },
+  avatar: { type: String, default: null },
   roles: [{ type: String, ref: "Role" }],
   posts: [
     {

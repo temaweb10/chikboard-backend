@@ -37,6 +37,7 @@ class authController {
         password: hashPassword,
         subscribers: 0,
         location,
+        avatar: null,
         roles: [userRole.value],
       });
       console.log(user);
@@ -63,13 +64,14 @@ class authController {
       if (!validPassword) {
         return res.status(400).json({ message: `Введен не верный пароль` });
       }
-      console.log(user);
+      console.log(user.avatar);
       const userJWT = {
         id: user._id,
         subscribers: 0,
         username: username,
         password: password,
         location: user.location,
+        avatar: user.avatar,
       };
 
       const token = generateAccessToken(user._id, user.roles, userJWT);
@@ -83,6 +85,7 @@ class authController {
           username: username,
           password: password,
           location: user.location,
+          avatar: user.avatar,
         },
       });
     } catch (error) {
@@ -101,6 +104,7 @@ class authController {
         username: req.user.user.username,
         password: req.user.user.password,
         location: req.user.user.location,
+        avatar: req.user.user.avatar,
       });
       res.json({
         token,
@@ -110,6 +114,7 @@ class authController {
           username: req.user.user.username,
           password: req.user.user.password,
           location: req.user.user.location,
+          avatar: req.user.user.avatar,
         },
       });
     } catch (error) {
