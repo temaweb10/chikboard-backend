@@ -13,6 +13,12 @@ const post = new Schema(
     price: { type: Number, required: true },
     likes: { type: Number, default: 0 },
     views: { type: Number, default: 0 },
+    post_images: [
+      {
+        type: Schema.Types.Array,
+        ref: "ImagesPost",
+      },
+    ],
     id: { type: String },
   },
   { timestamps: true }

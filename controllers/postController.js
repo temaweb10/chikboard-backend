@@ -1,6 +1,7 @@
 const express = require("express");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const ImagesPost = require("../models/ImagePost");
 
 const createPost = async (req, res) => {
   const {
@@ -15,8 +16,10 @@ const createPost = async (req, res) => {
     location,
     id,
     tel,
+    post_images,
   } = req.body;
   console.log({ title, about, username, category, price, id });
+  console.log(post_images);
   try {
     const newPost = new Post({
       title,
@@ -30,6 +33,7 @@ const createPost = async (req, res) => {
       views,
       id,
       tel,
+      post_images,
     });
     console.log(newPost);
     await newPost.save();
