@@ -5,8 +5,9 @@ const authRouter = require("./routes/authRouter");
 const postRouter = require("./routes/postRouter");
 const userRouter = require("./routes/userRouter");
 const testRouter = require("./routes/testRoutes");
+require("dotenv").config();
 const PORT = process.env.PORT || 3001;
-const db = `mongodb+srv://temadev:recomend23@cluster0.n8n92uv.mongodb.net/chicboard?retryWrites=true&w=majority`;
+const db = process.env.MONGO_URL;
 const app = express();
 
 app.use(express.json());
