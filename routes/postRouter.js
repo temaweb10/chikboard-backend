@@ -13,6 +13,6 @@ router.post("/api/add-post", createPost);
 router.get("/api/posts", getPostMiddleware, allPosts);
 router.get("/api/post/:postID", findPostById);
 router.get("/api/search-post", findPosts);
-router.delete("/api/remove-by-id/:postID", removeById);
+/* router.delete("/api/remove-by-id/:postID", removeById); */
 
 module.exports = router;

@@ -75,9 +75,10 @@ const findPostById = (req, res) => {
 };
 const removeById = (req, res) => {
   try {
-    User.find().then((result) => {
+    Post.find().then((result) => {
       result.forEach((value, index, element) => {
-        User.findByIdAndDelete(value._id).then((result) => {});
+        console.log(value._id)
+        Post.findByIdAndRemove(value._id).then(() => {}).catch((err)=>{console.log(err)})
       });
     });
     res.status(200).json({ message: "успешно удалил" });
