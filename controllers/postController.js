@@ -63,22 +63,25 @@ const allPosts = (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 };
-const findPostById = (req, res) => {
+const findPostById = async (req, res) => {
   try {
-    Post.findById(req.params.postID).then((result) => {
-      res.status(200).json(result);
-    });
+    const post = await Post.findOne({ _id: req.params.postID });
+    console.log(post);
+    res.status(200).json(post);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Ошибка сервера" });
   }
 };
 const removeById = (req, res) => {
   try {
-    Post.find().then((result) => {
+    User.find().then((result) => {
       result.forEach((value, index, element) => {
-        console.log(value._id)
-        Post.findByIdAndRemove(value._id).then(() => {}).catch((err)=>{console.log(err)})
+        console.log(value._id);
+        Post.findByIdAndRemove(value._id)
+          .then(() => {})
+          .catch((err) => {
+            console.log(err);
+          });
       });
     });
     res.status(200).json({ message: "успешно удалил" });

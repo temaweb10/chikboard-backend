@@ -10,6 +10,16 @@ const getAllUsers = (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 };
+const findUser = (req, res) => {
+  try {
+    User.findById(req.params.userId).then((result) => {
+      res.status(200).json(result);
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+};
 const userEdit = (req, res) => {
   /*   const id = req.params.userId; */
   const { avatar } = req.body;
@@ -26,4 +36,4 @@ const userEdit = (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, userEdit };
+module.exports = { getAllUsers, userEdit, findUser };
