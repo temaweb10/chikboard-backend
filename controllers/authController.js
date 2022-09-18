@@ -19,7 +19,7 @@ class authController {
           .status(400)
           .json({ message: "Ошибка при регистрации", errors });
       }
-      const { username, password, location } = req.body;
+      const { username, password, name, surname, tel, location } = req.body;
       console.log(req.body);
       console.log(password);
       const candidate = await User.findOne({ username });
@@ -37,8 +37,12 @@ class authController {
         password: hashPassword,
         subscribers: 0,
         location,
+        name,
+        surname,
+        tel,
         avatar: null,
         roles: [userRole.value],
+        rating: 0,
       });
       console.log(user);
       user.save();
@@ -70,8 +74,11 @@ class authController {
         subscribers: 0,
         username: username,
         password: password,
+        name: user.name,
+        surname: user.surname,
         location: user.location,
         avatar: user.avatar,
+        tel: user.tel,
       };
 
       const token = generateAccessToken(user._id, user.roles, userJWT);
@@ -84,8 +91,11 @@ class authController {
           subscribers: 0,
           username: username,
           password: password,
+          name: user.name,
+          surname: user.surname,
           location: user.location,
           avatar: user.avatar,
+          tel: user.tel,
         },
       });
     } catch (error) {
@@ -105,6 +115,9 @@ class authController {
         password: req.user.user.password,
         location: req.user.user.location,
         avatar: req.user.user.avatar,
+        name: req.user.username,
+        surname: req.user.usersurname,
+        tel: req.user.user.tel,
       });
       res.json({
         token,
@@ -115,6 +128,9 @@ class authController {
           password: req.user.user.password,
           location: req.user.user.location,
           avatar: req.user.user.avatar,
+          name: req.user.user.username,
+          surname: req.user.user.usersurname,
+          tel: req.user.user.tel,
         },
       });
     } catch (error) {

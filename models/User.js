@@ -4,6 +4,9 @@ const User = new Schema(
   {
     username: { type: String, unique: true, required: true },
     password: { type: String, required: true },
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
+    tel: { type: String, required: true },
     subscribers: { type: Number, required: true, default: 0 },
     location: { type: String },
     avatar: { type: String, default: null },
@@ -14,6 +17,7 @@ const User = new Schema(
         ref: "Post",
       },
     ],
+    rating: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
