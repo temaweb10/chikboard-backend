@@ -103,5 +103,39 @@ const findPosts = (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 };
+const addPreview = (req, res) => {
+  try {
+    Post.findByIdAndUpdate(req.params.postID, {
+      $inc: { views: 1 },
+    }).then((result) => {
+      res.status(200);
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+};
+const addFavorite = (req, res) => {
+  const { newFavoritePost, id } = req.body;
+  try {
+    User.findByIdAndUpdate(
+      { _id: id },
+      {
+        $favorite_posts: { posts: [newFavoritePost] },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+};
 
-module.exports = { createPost, allPosts, findPostById, findPosts, removeById };
+module.exports = {
+  createPost,
+  allPosts,
+  findPostById,
+  findPosts,
+  removeById,
+  addPreview,
+  addFavorite,
+};

@@ -11,6 +11,7 @@ const getAllUsers = (req, res) => {
   }
 };
 const findUser = (req, res) => {
+  console.log(`req.params.userId ${req.params.userId}`);
   try {
     User.findById(req.params.userId).then((result) => {
       res.status(200).json(result);

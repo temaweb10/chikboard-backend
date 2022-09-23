@@ -30,23 +30,29 @@ class authController {
           .json({ message: "Такой пользователь существует" });
       }
 
-      const hashPassword = bcrypt.hashSync(password, 7);
-      const userRole = await Role.findOne({ value: "USER" });
-      const user = new User({
-        username,
-        password: hashPassword,
-        subscribers: 0,
-        location,
-        name,
-        surname,
-        tel,
-        avatar: null,
-        roles: [userRole.value],
-        rating: 0,
-      });
-      console.log(user);
-      user.save();
-      return res.json({ message: "Пользователь был успешно зарегистрирован" });
+      try {
+        const hashPassword = bcrypt.hashSync(password, 7);
+        const userRole = await Role.findOne({ value: "USER" });
+        const user = new User({
+          username,
+          password: hashPassword,
+          subscribers: 0,
+          location,
+          name,
+          surname,
+          tel,
+          avatar: null,
+          roles: [userRole.value],
+          rating: 0,
+        });
+        console.log(user);
+        user.save();
+        return res.json({
+          message: "Пользователь был успешно зарегистрирован",
+        });
+      } catch (error) {
+        res.status(400).json({ message: "Register err" });
+      }
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: "Register err" });

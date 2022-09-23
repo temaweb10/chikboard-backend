@@ -17,6 +17,12 @@ const User = new Schema(
         ref: "Post",
       },
     ],
+    favorite_posts: [
+      {
+        type: Schema.Types.Array,
+        ref: "Post",
+      },
+    ],
     rating: { type: Number, default: 0 },
   },
   { timestamps: true }
