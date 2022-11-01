@@ -17,9 +17,9 @@ const createPost = async (req, res) => {
     id,
     tel,
     post_images,
+    descPost,
   } = req.body;
-  console.log({ title, about, username, category, price, id });
-  console.log(post_images);
+  console.log(podCategory);
   try {
     const newPost = new Post({
       title,
@@ -34,8 +34,8 @@ const createPost = async (req, res) => {
       id,
       tel,
       post_images,
+      descPost,
     });
-    console.log(newPost);
     await newPost.save();
     await User.findByIdAndUpdate(
       { _id: id },
@@ -52,8 +52,6 @@ const createPost = async (req, res) => {
 };
 
 const allPosts = (req, res) => {
-  console.log(req.query.category);
-  console.log(req.postParams);
   try {
     Post.find().then((result) => {
       res.status(200).json(result);
@@ -66,7 +64,6 @@ const allPosts = (req, res) => {
 const findPostById = async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.params.postID });
-    console.log(post);
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: "Ошибка сервера" });
@@ -76,7 +73,6 @@ const removeById = (req, res) => {
   try {
     User.find().then((result) => {
       result.forEach((value, index, element) => {
-        console.log(value._id);
         Post.findByIdAndRemove(value._id)
           .then(() => {})
           .catch((err) => {
@@ -91,10 +87,11 @@ const removeById = (req, res) => {
   }
 };
 const findPosts = (req, res) => {
+  const { title } = req.body;
+  console.log(title);
   try {
     Post.find({
-      $min: { price: "333150" },
-      title: { $regex: req.query.title },
+      title: { $regex: String(title) },
     }).then((result) => {
       res.status(200).json(result);
     });
@@ -123,10 +120,44 @@ const addFavorite = (req, res) => {
       {
         $favorite_posts: { posts: [newFavoritePost] },
       }
-    );
+    ).then((result) => {
+      res.status(200);
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Ошибка сервера" });
+  }
+};
+const changePostTypeById = (req, res) => {
+  const {newType ,postID} = req.body;
+  try {
+    Post.findByIdAndUpdate(
+      {_id:postID} ,
+      {
+        typePost: newType,
+      }
+    ).then((result)=>{
+      console.log(result)
+      console.log('try')
+      res.status(200).json({message:"Тип изменён"});
+    })
+   
+      
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+};
+const arrTest = (req, res) => {
+  try {
+    const { arr } = req.body;
+    console.log(req.body);
+    console.log(req.body.arr[0].a);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "ошибка сервера",
+    });
   }
 };
 
@@ -138,4 +169,5 @@ module.exports = {
   removeById,
   addPreview,
   addFavorite,
+  arrTest,changePostTypeById
 };
