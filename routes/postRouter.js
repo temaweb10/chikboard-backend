@@ -9,7 +9,9 @@ const {
   removeById,
   addPreview,
   addFavorite,
-  arrTest,changePostTypeById
+  arrTest,
+  changePostTypeById,
+  recommendPosts,
 } = require("../controllers/postController");
 
 router.post("/api/add-post", createPost);
@@ -18,6 +20,7 @@ router.post("/api/arr", arrTest);
 router.get("/api/posts", getPostMiddleware, allPosts);
 router.get("/api/post/:postID", findPostById);
 router.get("/api/search-post", findPosts);
+router.get("/api/post/recommend", recommendPosts);
 router.put("/api/post-views-update/:postID", addPreview);
 router.put("/api/post/type-change/:postID", changePostTypeById);
 router.delete("/api/remove-by-id/:postID", removeById);

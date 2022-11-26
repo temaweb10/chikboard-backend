@@ -129,20 +129,18 @@ const addFavorite = (req, res) => {
   }
 };
 const changePostTypeById = (req, res) => {
-  const {newType ,postID} = req.body;
+  const { newType, postID } = req.body;
   try {
     Post.findByIdAndUpdate(
-      {_id:postID} ,
+      { _id: postID },
       {
         typePost: newType,
       }
-    ).then((result)=>{
-      console.log(result)
-      console.log('try')
-      res.status(200).json({message:"Тип изменён"});
-    })
-   
-      
+    ).then((result) => {
+      console.log(result);
+      console.log("try");
+      res.status(200).json({ message: "Тип изменён" });
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Ошибка сервера" });
@@ -161,6 +159,22 @@ const arrTest = (req, res) => {
   }
 };
 
+const recommendPosts = (req, res) => {
+  const { recommend } = req.body;
+  console.log(title);
+  try {
+    Post.find({
+      category: { $regex: String(title) },
+      podCategory: { $regex: String(title) },
+    }).then((result) => {
+      res.status(200).json(result);
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+};
+
 module.exports = {
   createPost,
   allPosts,
@@ -169,5 +183,7 @@ module.exports = {
   removeById,
   addPreview,
   addFavorite,
-  arrTest,changePostTypeById
+  arrTest,
+  changePostTypeById,
+  recommendPosts,
 };

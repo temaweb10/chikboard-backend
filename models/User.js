@@ -24,6 +24,8 @@ const User = new Schema(
       },
     ],
     rating: { type: Number, default: 0 },
+    feedback_count: { type: Number, default: 0 },
+    subscribed_count: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
