@@ -62,21 +62,44 @@ const UserMe = (req, res) => {
   }
 };
 const addSubscribe = (req, res) => {
-  const userId = req.params.userId;
-  const subscribeUserId = req.params.subscribeUserId;
+
+  const userId = req.params.userId;//ему добавляем подписчика
+  const subscribeUserId = req.params.subscribeUserId;//его добавляем к userId
+
   console.log(userId,subscribeUserId)
+  try {
+
     User.findByIdAndUpdate(
       { _id: userId } ,
       { $push: { subscribersList: [subscribeUserId] } }
     )
     .then((result) => {
       console.log(result)
-      res.status(200).json({message:'подписчик успешно добавлен'})
+    /*   res.status(200).json({message:'подписчик успешно добавлен'}) */
     })
     .catch((err)=>{
       console.log(err);
-      res.status(500).json({ message: "Ошибка сервера" });
+      /* res.status(500).json({ message: "Ошибка сервера" }); */
     })
+
+    User.findByIdAndUpdate(
+      { _id: subscribeUserId } ,
+      { $push: { userSubscribedList: [userId] } }
+    )
+    .then((result) => {
+      console.log(result)
+     /*  res.status(200).json({message:'вы успешно подписались'}) */
+    })
+    .catch((err)=>{
+      console.log(err);
+     /*  res.status(500).json({ message: "Ошибка сервера" }); */
+    })
+    res.status(200).json({message:'всё успешно:)'})
+  } catch (error) {
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+   
+
 };
 const removeSubscribe = (req, res) => {
   const userId = req.params.userId;
@@ -85,6 +108,19 @@ const removeSubscribe = (req, res) => {
     User.findByIdAndUpdate(
       { _id: userId } ,
       { $pull: { subscribersList: [subscribeUserId] } }
+    )
+    .then((result) => {
+      console.log(result)
+      res.status(200).json({message:'отписан'})
+    })
+    .catch((err)=>{
+      console.log(err);
+      res.status(500).json({ message: "Ошибка сервера" });
+    })
+
+    User.findByIdAndUpdate(
+      { _id: subscribeUserId } ,
+      { $pull: { userSubscribedList: [userId] } }
     )
     .then((result) => {
       console.log(result)

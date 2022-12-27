@@ -20,6 +20,13 @@ const User = new Schema(
         , required: true 
       },
     ],
+    userSubscribedList: [
+      {
+        type: Schema.Types.Array,
+        ref: "SubscribedList"
+        , required: true 
+      },
+    ],
     location: { type: String },
     avatar: { type: String, default: null },
     roles: [{ type: String, ref: "Role" }],
