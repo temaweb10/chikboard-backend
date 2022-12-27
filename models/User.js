@@ -7,7 +7,19 @@ const User = new Schema(
     name: { type: String, required: true },
     surname: { type: String, required: true },
     tel: { type: String, required: true },
-    subscribers: { type: Number, required: true, default: 0 },
+   /*  subscribers: [
+      {
+        type: Schema.Types.Array,
+        ref: "SubscribersUser",
+      },
+    ], */
+    subscribersList: [
+      {
+        type: Schema.Types.Array,
+        ref: "SubscribersUserS"
+        , required: true 
+      },
+    ],
     location: { type: String },
     avatar: { type: String, default: null },
     roles: [{ type: String, ref: "Role" }],

@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 /*active inactive sold*/
 const post = new Schema(
   {
-    typePost: { type: String, default: "active" },
     title: { type: String, required: true },
     about: { type: String, required: true },
     username: { type: String },
@@ -22,6 +21,7 @@ const post = new Schema(
         ref: "ImagesPost",
       },
     ],
+    typePost: { type: String, default: "active" },
     id: { type: String },
   },
   { timestamps: true }

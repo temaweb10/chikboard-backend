@@ -61,6 +61,40 @@ const UserMe = (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 };
+const addSubscribe = (req, res) => {
+  const userId = req.params.userId;
+  const subscribeUserId = req.params.subscribeUserId;
+  console.log(userId,subscribeUserId)
+    User.findByIdAndUpdate(
+      { _id: userId } ,
+      { $push: { subscribersList: [subscribeUserId] } }
+    )
+    .then((result) => {
+      console.log(result)
+      res.status(200).json({message:'подписчик успешно добавлен'})
+    })
+    .catch((err)=>{
+      console.log(err);
+      res.status(500).json({ message: "Ошибка сервера" });
+    })
+};
+const removeSubscribe = (req, res) => {
+  const userId = req.params.userId;
+  const subscribeUserId = req.params.subscribeUserId;
+  
+    User.findByIdAndUpdate(
+      { _id: userId } ,
+      { $pull: { subscribersList: [subscribeUserId] } }
+    )
+    .then((result) => {
+      console.log(result)
+      res.status(200).json({message:'отписан'})
+    })
+    .catch((err)=>{
+      console.log(err);
+      res.status(500).json({ message: "Ошибка сервера" });
+    })
+};
 
 const deleteUserById = (req, res) => {
   const  username  = req.params.username;
@@ -101,5 +135,5 @@ module.exports = {
   userEdit,
   findUser,
   UserMe,
-  findUserByUserName,deleteUserById
+  findUserByUserName,deleteUserById,addSubscribe,removeSubscribe
 };
