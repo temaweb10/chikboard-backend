@@ -6,12 +6,13 @@ const {
   findUser,
   UserMe,
   findUserByUserName,deleteUserById,
-  addSubscribe,removeSubscribe
+  addSubscribe,removeSubscribe,findUserForSub
 } = require("../controllers/userСontroller");
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/api/users", getAllUsers);
 router.get("/api/user/findById/:userId", findUser);
+router.get("/api/user/findByIdForSub/:userId", findUserForSub);
 router.get("/api/user/find/:userName", findUserByUserName);
 router.get("/api/me", authMiddleware, UserMe);
 router.post("/api/:userId/addSubscribe/:subscribeUserId", addSubscribe);

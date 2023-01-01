@@ -20,6 +20,26 @@ const findUser = (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 };
+
+const findUserForSub = (req, res) => {
+  console.log(req.params.userId)
+  try {
+    User.findById(req.params.userId).then((result,err) => {
+     
+      res.status(200).json({
+        name:result.name,
+        surname:result.surname,
+        avatar:result.avatar,
+        rating:result.rating,
+       
+      });
+    })
+  } catch (error) {
+     console.log(error); 
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+}; 
+
 const findUserByUserName = (req, res) => {
   try {
     User.findOne({ username: req.params.userName }).then((result) => {
@@ -171,5 +191,5 @@ module.exports = {
   userEdit,
   findUser,
   UserMe,
-  findUserByUserName,deleteUserById,addSubscribe,removeSubscribe
+  findUserByUserName,deleteUserById,addSubscribe,removeSubscribe,findUserForSub
 };
