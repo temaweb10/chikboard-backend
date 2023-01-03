@@ -27,10 +27,13 @@ const findUserForSub = (req, res) => {
     User.findById(req.params.userId).then((result,err) => {
      
       res.status(200).json({
+
         name:result.name,
+        username:result.username,
         surname:result.surname,
         avatar:result.avatar,
         rating:result.rating,
+        id:result._id
        
       });
     })
